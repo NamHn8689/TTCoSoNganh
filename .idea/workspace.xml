@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c707c2b6-a5dd-4bff-b0b6-9f00060e5ee6" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1Y3oK8ZEGHT78IZ4sV717yBFjjE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AAA\TTCoSoNganh" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.company.Main" />
+      <module name="TTCoSoNganh" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="515" y="215" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582185177564">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="515" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1582185177564" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1582193615566">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1582193615566" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1582193744620">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1536.824@0.0.1536.824" timestamp="1582193744620" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1582180751115">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1582180751115" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582184329137">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1582184329137" />
+  </component>
+</project>
