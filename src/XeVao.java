@@ -48,6 +48,6 @@ public class XeVao extends Xe {
     }
 
     public String toString2() {
-        return String.format("%s/%s/%s/%s/%s", getId(), getNhanHieu(), getMauSac(), getThoiGianGui(), getNgayGui());
+        return String.format("%s/%s/%s/%s/%s/%s", getId(), getNhanHieu(), getMauSac(), getBienSoXe(), getThoiGianGui(), getNgayGui());
     }
 }

@@ -1,12 +1,11 @@
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main2 {
     public static void main(String[] args) throws IOException {
         String baiDoXe = "BAIDOXE.DAT";
-        WorkWithFile f = new WorkWithFile();
+        long soTien1H = 5000;
+        Work f = new Work();
         Scanner scanner = new Scanner(System.in);
         int op;
         String Edit;
@@ -23,7 +22,8 @@ public class Main2 {
             System.out.println("3. Tạo hóa đơn khi có xe ra");
             //xuất hóa đơn gồm id, các thông tin liên quan đến xe,
             // ngày giờ lấy xe số tiền phải trả
-            // đồng thời ghi dữ liệu có trong phiếu này vào file THONGKE.DAT để truy suất(đếm số xe đã
+            // xóa khỏi thong tin về xe ra trong bãi đỗi xe
+            // đồng thời ghi dữ liệu về xe ra vào file THONGKE.DAT để truy suất(đếm số xe đã
             //gửi trong ngày hôm nay, số tiền đã thu được trong ngày hôm nay
             System.out.println("0. Thoát");
 
@@ -216,13 +216,8 @@ public class Main2 {
 //                    System.out.println(khachHang.toString());
 //                    break;
                 case 3:
-                    f.ShowAllBAIDOXE();
 
-
-
-
-
-                    f.CreateThenShowHoaDon();
+                    f.CreateAndShowHoaDon(soTien1H,);
                     break;
                 default:
                     System.out.println("\nBạn đã chọn sai");
