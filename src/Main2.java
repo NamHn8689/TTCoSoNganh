@@ -1,65 +1,81 @@
-import java.io.IOException;
-import java.util.Scanner;
-
-public class Main2 {
-    public static void main(String[] args) throws IOException {
-        String baiDoXe = "BAIDOXE.DAT";
-        long soTien1H = 5000;
-        Work f = new Work();
-        Scanner scanner = new Scanner(System.in);
-        int op;
-        String Edit;
-        do {
-            System.out.println("----------------------------------------MENU----------------------------------------");
-            System.out.println("1. Nhập thông tin xe vào");
-            System.out.println("2. Hiển thị tất cả xe trong bãi đỗ xe");
+//import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.Scanner;
+//
+//public class Main {
+//    public static void main(String[] args) throws IOException {
+//        WorkWithFile f = new WorkWithFile();
+//        Scanner scanner = new Scanner(System.in);
+//        int op;
+//        String Edit;
+//        do {
+//            System.out.println("----------------------------------------MENU----------------------------------------");
+//            System.out.println("1. Thêm điên thoại vào kho");
+//            System.out.println("2. Hiển thị tất cả điện thoại trong kho");
 //            System.out.println("3. Sửa điện thoại trong kho");
 //            System.out.println("4. Nhặt điên thoại vào giỏ");
 //            System.out.println("5. Hiển thị toàn bộ giỏ hàng");
 //            System.out.println("6. Tạo thông tin khách hàng");
 //            System.out.println("7. Sửa thông tin khách hàng");
 //            System.out.println("8. Hiển thị thông tin khách hàng");
-            System.out.println("3. Tạo hóa đơn khi có xe ra");
-            //xuất hóa đơn gồm id, các thông tin liên quan đến xe,
-            // ngày giờ lấy xe số tiền phải trả
-            // xóa khỏi thong tin về xe ra trong bãi đỗi xe
-            // đồng thời ghi dữ liệu về xe ra vào file THONGKE.DAT để truy suất(đếm số xe đã
-            //gửi trong ngày hôm nay, số tiền đã thu được trong ngày hôm nay
-            System.out.println("0. Thoát");
-
-            System.out.print("Lựa chọn của bạn: ");
-            op = scanner.nextInt();
-
-            switch (op) {
-                case 0:
-                    System.out.println("Hẹn gặp lại!");
-                    break;
-                case 1:
-                    String nhanHieu, mauSac, bienSoXe;
-                    scanner.nextLine();
-                    System.out.print("Nhập nhãn hiệu xe: ");
-                    nhanHieu = scanner.nextLine();
-                    System.out.print("Nhập màu sắc xe: ");
-                    mauSac = scanner.nextLine();
-                    System.out.print("Nhập màu biển số xe: ");
-                    bienSoXe = scanner.nextLine();
-                    String time = String.valueOf(java.time.LocalTime.now());//lấy h:m:s(UTC)
-                    String ymd = String.valueOf(java.time.LocalDate.now());//lấy y-m-d
-                    //tạo id (ymdhms+bienSoXe)
-                    String[] arrText = ymd.split("-");
-                    String id = arrText[2] + arrText[1] + arrText[0];
-                    arrText = time.split(":");
-                    id += arrText[0] + arrText[1] + arrText[2];
-
-                    XeVao A = new XeVao(id, nhanHieu, mauSac, bienSoXe, time, ymd);
-                    //ghi đxe A vào file BAIDOXE.DAT
-                    f.WriteToBAIDOXE(A, baiDoXe);
-                    break;
-                case 2:
-                    System.out.println("\nBãi đỗ xe:\n");
-                    f.ShowAllBAIDOXE();
-                    System.out.println("                                                                                   Xuất thành công\n");
-                    break;
+//            System.out.println("9. Tạo hóa đơn hóa đơn");//xuất hóa đơn + ghi hóa đơn vào folder
+//            System.out.println("0. Thoát");
+//
+//            System.out.print("Lựa chọn của bạn: ");
+//            op = scanner.nextInt();
+//
+//            switch (op) {
+//                case 0:
+//                    System.out.println("Hẹn gặp lại!");
+//                    break;
+//                case 1:
+//                    String id, ten, nhanHieu;
+//                    int gia, soLuong;
+//                    scanner.nextLine();
+//                    System.out.print("Nhập mã điên thoại: ");
+//                    id = scanner.nextLine();
+//                    System.out.print("Nhập tên điện thoại: ");
+//                    ten = scanner.nextLine();
+//                    String[] brand = {"Apple", "SAMSUNG", "HUAWEI", "NOKIA", "XIAOMI", "OPPO", "VSMART", "BPHONE", "VIVO", "LG", "ZTE", "Lựa chọn khác ..."};
+//                    int op1;//bắt lựa chọn nhãn hiệu
+//                    System.out.println("Chọn nhãn hiệu: ");
+//                    do {
+//                        System.out.println("1. Apple");
+//                        System.out.println("2. SAMSUNG");
+//                        System.out.println("3. HUAWEI");
+//                        System.out.println("4. NOKIA");
+//                        System.out.println("5. XIAOMI");
+//                        System.out.println("6. OPPO");
+//                        System.out.println("7. VSMART");
+//                        System.out.println("8. BPHONE");
+//                        System.out.println("9. VIVO");
+//                        System.out.println("10. LG");
+//                        System.out.println("11. ZTE");
+//                        System.out.println("12. Lựa chọn khác ...");
+//
+//                        System.out.print("\nLựa chọn của ban: ");
+//                        op1 = Integer.parseInt(scanner.nextLine());
+//                    } while (op1 <= 0 || op1 > 12);
+//                    if (op1 == 12) {
+//                        System.out.print("Nhập nhãn hiệu: ");
+//                        nhanHieu = scanner.nextLine();
+//                    } else
+//                        nhanHieu = brand[op1 - 1];
+//
+//                    System.out.print("Nhập giá: ");
+//                    gia = scanner.nextInt();
+//                    System.out.print("Nhập số lượng: ");
+//                    soLuong = scanner.nextInt();
+//                    DienThoaiTrongKho A = new DienThoaiTrongKho(id, ten, nhanHieu, gia, soLuong);
+//
+//                    //ghi điện thoại A vào file KHO
+//                    f.WriteToKHO(A);
+//                    break;
+//                case 2:
+//                    System.out.println("\nKho:\n");
+//                    f.ShowAllDTTK();
+//                    System.out.println("                                                                                   Xuất thành công\n");
+//                    break;
 //                case 3:
 //                    scanner.nextLine();
 //                    ArrayList<DienThoaiTrongKho> KHO = f.ReadDTTKFromFile("KHO.dat");
@@ -215,16 +231,15 @@ public class Main2 {
 //                    khachHang = f.ReadFileKHACH();
 //                    System.out.println(khachHang.toString());
 //                    break;
-                case 3:
-
-                    f.CreateAndShowHoaDon(soTien1H,);
-                    break;
-                default:
-                    System.out.println("\nBạn đã chọn sai");
-                    System.out.println("Vui lòng chọn lại.\n");
-            }
-        }
-        while (op != 0);
-    }
-}
-
+//                case 9:
+//                    f.CreateThenShowHoaDon();
+//                    break;
+//                default:
+//                    System.out.println("\nBạn đã chọn sai");
+//                    System.out.println("Vui lòng chọn lại.\n");
+//            }
+//        }
+//        while (op != 0);
+//    }
+//}
+//

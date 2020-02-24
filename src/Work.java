@@ -58,13 +58,13 @@ public class Work {
 
     //===============================
     //Write
-    public void WriteToBAIDOXE(XeVao A, String fileName) {
+    public void GhiVaoBAIDOXE(XeVao A, String fileName) {
         OpenFileToWrite(fileName);
         prWriter.println(A.toString2());
         CloseFileAfterWrite();
     }
 
-    public void WriteToTHONGKE(XeVaoRa A, String fileName) {
+    public void GhiVaoTHONGKE(XeVaoRa A, String fileName) {
 //        File file = new File(fileName);
         OpenFileToWrite(fileName);
         prWriter.println(A.toString2());
@@ -73,9 +73,15 @@ public class Work {
 
     //========================================================================================
     //Create
-    public XeVao CreateXeVaoFromFile(String data) {
+    public XeVao CreateXeVaoTuFile(String data) {
         String[] s = data.split("/");
         XeVao A = new XeVao(s[0], s[1], s[2], s[3], s[4], s[5]);
+        return A;
+    }
+
+    public XeVaoRa CreateXeVaoRaTuFile(String data) {
+        String[] s = data.split("/");
+        XeVaoRa A = new XeVaoRa(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], Long.parseLong(s[8]));
         return A;
     }
 
@@ -84,13 +90,13 @@ public class Work {
         String time = String.valueOf(java.time.LocalTime.now());//lấy h:m:s(UTC)
         String ymd = String.valueOf(java.time.LocalDate.now());//lấy y-m-d
 
-        ArrayList<XeVao> xeVaos = ReadXeVaoFromFile("BAIDOXE.DAT");
+        ArrayList<XeVao> xeVaos = DocXeVaoTuFile("BAIDOXE.DAT");
 
         String bienSoRa;
 
         XeVao xeRa = new XeVao();
         do {
-            ShowAllBAIDOXE();
+            XuatTatCaBAIDOXE();
             System.out.println("\nNhập biển số xe của xe muốn thanh toán");
             bienSoRa = scanner.nextLine();
             for (int i = 0; i < xeVaos.size(); i++)
@@ -119,18 +125,30 @@ public class Work {
 
         XeVaoRa A = new XeVaoRa(xeRa.getId(), xeRa.getNhanHieu(), xeRa.getMauSac(), xeRa.getBienSoXe(),
                 xeRa.getThoiGianGui(), xeRa.getNgayGui(), time, ymd, (long) soTienPhaiTra);
-        WriteToTHONGKE(A, fileName);
-        UpdateFileBAIDOXE(xeVaos, "BAIDOXE.DAT");//GHI LẠI LIST VÀO BÃI ĐỖ XE
+        GhiVaoTHONGKE(A, fileName);
+        CapNhatFileBAIDOXE(xeVaos, "BAIDOXE.DAT");//GHI LẠI LIST XE VÀO BÃI ĐỖ
     }
 
     //===================================
     //Read
-    public ArrayList<XeVao> ReadXeVaoFromFile(String fileName) {
+    public ArrayList<XeVao> DocXeVaoTuFile(String fileName) {
         OpenFileToRead(fileName);
         ArrayList<XeVao> list = new ArrayList<XeVao>();
         while (scanner.hasNext()) {
             String data = scanner.nextLine();
-            XeVao A = CreateXeVaoFromFile(data);
+            XeVao A = CreateXeVaoTuFile(data);
+            list.add(A);
+        }
+        CloseFileAfterRead();
+        return list;
+    }
+
+    public ArrayList<XeVaoRa> DocXeVaoRaTuFile(String fileName) {
+        OpenFileToRead(fileName);
+        ArrayList<XeVaoRa> list = new ArrayList<XeVaoRa>();
+        while (scanner.hasNext()) {
+            String data = scanner.nextLine();
+            XeVaoRa A = CreateXeVaoRaTuFile(data);
             list.add(A);
         }
         CloseFileAfterRead();
@@ -139,16 +157,22 @@ public class Work {
 
     //================================================
     //Show
-    public void ShowAllBAIDOXE() {
-        ArrayList<XeVao> arr = ReadXeVaoFromFile("BAIDOXE.DAT");
+    public void XuatTatCaBAIDOXE() {
+        ArrayList<XeVao> arr = DocXeVaoTuFile("BAIDOXE.DAT");
         for (XeVao i : arr)
+            System.out.println(i.toString());
+    }
+
+    public void XuatTatCaTHONGKE() {
+        ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
+        for (XeVaoRa i : arr)
             System.out.println(i.toString());
     }
 
 
     //===========================
     // Update
-    public void UpdateFileBAIDOXE(ArrayList<XeVao> A, String fileName) {
+    public void CapNhatFileBAIDOXE(ArrayList<XeVao> A, String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
             file.delete();
@@ -179,4 +203,23 @@ public class Work {
 
         return daysDiff + timesDiff;
     }
+
+    public long TinhTien(ArrayList<XeVaoRa> arrayList) {
+        long s = 0;
+        for (XeVaoRa i : arrayList) {
+            s += i.getSoTienPhaiTra();
+        }
+        return s;
+    }
+
+    public void XuatToanBoTienTuTHONGKE() {
+        ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
+        System.out.println("Toàn bộ tiền: " + TinhTien(arr));
+    }
+
+    public void XuatDemTHONGKE() {
+        ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
+        System.out.println("Có tất cả " + arr.size() + " xe trong file THONGKE");
+    }
+
 }

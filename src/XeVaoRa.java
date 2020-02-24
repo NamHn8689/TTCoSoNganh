@@ -52,7 +52,7 @@ public class XeVaoRa extends XeVao {
     }
 
     public String toString2() {
-        return String.format("%s/%s/%s/%s/%s/%s/%s/%s/%d", getId(), getNhanHieu(), getMauSac(), getBienSoXe(), getThoiGianGui(),
+        return String.format("%s/%s/%s/%s/%s/%s/%s/%s/%l", getId(), getNhanHieu(), getMauSac(), getBienSoXe(), getThoiGianGui(),
                 getNgayGui(), getThoiGianLay(), getNgayLay(), getSoTienPhaiTra());
     }
 }
