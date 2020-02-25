@@ -32,4 +32,5 @@ Tổ chức chương trình:
         + Trở lại 
     + Thoát
 - Hạn chế:
-    + Còn nhiều Exception chưa fix
+    + Chương trình còn nhỏ 
+    + Ít tính thực tế
