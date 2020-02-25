@@ -1,5 +1,3 @@
-import com.sun.xml.internal.ws.addressing.WsaActionUtil;
-
 import java.io.*;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -50,14 +48,6 @@ public class Work {
         }
     }
 
-    public void CloseFileAfterRead() {
-        try {
-            scanner.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     //===============================
     //Write
     public void GhiVaoBAIDOXE(XeVao A, String fileName) {
@@ -83,51 +73,8 @@ public class Work {
 
     public XeVaoRa TaoXeVaoRaTuFile(String data) {
         String[] s = data.split("/");
-        XeVaoRa A = new XeVaoRa(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], Long.parseLong(s[8]));
+        XeVaoRa A = new XeVaoRa(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], Integer.parseInt(s[8]));
         return A;
-    }
-
-    public void CreateAndShowHoaDon(long soTien1H) throws FileNotFoundException, ParseException {
-        String fileName = "THONGKE.DAT";
-        String time = String.valueOf(java.time.LocalTime.now());//lấy h:m:s(UTC)
-        String ymd = String.valueOf(java.time.LocalDate.now());//lấy y-m-d
-
-        ArrayList<XeVao> xeVaos = DocXeVaoTuFile("BAIDOXE.DAT");
-        String bienSoRa;
-        XeVao xeRa = new XeVao();
-
-        do {
-            XuatTatCaBAIDOXE();
-            System.out.println("\nNhập biển số xe của xe muốn thanh toán");
-            bienSoRa = scanner.nextLine();
-            for (int i = 0; i < xeVaos.size(); i++)
-                if (bienSoRa.equals(xeVaos.get(i).getBienSoXe())) {
-                    xeRa = xeVaos.get(i);
-                    xeVaos.remove(i);//xóa xe này khỏi bãi đỗ xe
-                }
-            if (xeRa.getId() == null)
-                System.out.println("Không thể tìm thấy xe này\nMời nhập lại");
-        }
-        while (xeRa.getId() == null);
-
-        double soHGuiXe = timeDiff(xeRa.getNgayGui(), xeRa.getThoiGianGui(), ymd, time);
-        double soTienPhaiTra = soHGuiXe * soTien1H;
-
-        //hiển thị hóa đơn lên màn hình
-        System.out.println("--------------------Hóa đơn--------------------");
-        System.out.println("Biển số xe: " + xeRa.getBienSoXe());
-        System.out.println("Nhan hieu: " + xeRa.getNhanHieu());
-        System.out.println("Màu sắc: " + xeRa.getMauSac());
-        System.out.println("Gửi lúc: " + xeRa.getThoiGianGui() + "(UTC) ngày:" + xeRa.getNgayGui());
-        System.out.println("Lấy lúc: " + time + "(UTC) ngày:" + ymd);
-        System.out.println("Số tiền phải trả: " + (long) soTienPhaiTra);
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.println("---------------------------------------------------------------------------------------");
-
-        XeVaoRa A = new XeVaoRa(xeRa.getId(), xeRa.getNhanHieu(), xeRa.getMauSac(), xeRa.getBienSoXe(),
-                xeRa.getThoiGianGui(), xeRa.getNgayGui(), time, ymd, (long) soTienPhaiTra);
-        GhiVaoTHONGKE(A, fileName);
-        CapNhatFileBAIDOXE(xeVaos, "BAIDOXE.DAT");//GHI LẠI LIST XE VÀO BÃI ĐỖ
     }
 
     //===================================
@@ -140,7 +87,6 @@ public class Work {
             XeVao A = TaoXeVaoTuFile(data);
             list.add(A);
         }
-        CloseFileAfterRead();
         return list;
     }
 
@@ -152,7 +98,6 @@ public class Work {
             XeVaoRa A = TaoXeVaoRaTuFile(data);
             list.add(A);
         }
-        CloseFileAfterRead();
         return list;
     }
 
@@ -174,19 +119,20 @@ public class Work {
         }
     }
 
-
-    //===========================
-    // Update
-    public void CapNhatFileBAIDOXE(ArrayList<XeVao> A, String fileName) {
+    public void DeleteFile(String fileName) {
         File file = new File(fileName);
-        if (file.exists()) {
+        if (file.exists())
             file.delete();
+    }
+
+    public void CapNhatFileBAIDOXE(ArrayList<XeVao> A, String fileName) {
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            for (XeVao i : A) fw.write(i.toString2());
+            fw.close();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        OpenFileToWrite(fileName);
-        for (XeVao i : A) {
-            prWriter.println(i.toString2());
-        }
-        CloseFileAfterWrite();
     }
 
     ////////
@@ -195,7 +141,7 @@ public class Work {
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = simpleDateFormat.parse(startDate);
         Date date2 = simpleDateFormat.parse(endDate);
-        long x = (date2.getTime() - date1.getTime());
+        int x = (int) (date2.getTime() - date1.getTime());
 
         double daysDiff = x * 1.0 / 60 / 60 / 1000;//trả về số h chênh lệch giữa 2 ngày
 
@@ -203,14 +149,14 @@ public class Work {
         date1 = simpleTimeFormat.parse(time1);
         date2 = simpleTimeFormat.parse(time2);
 
-        x = date2.getTime() - date1.getTime();
+        x = (int) (date2.getTime() - date1.getTime());
         double timesDiff = x * 1.0 / 1000 / 60 / 60;
 
         return daysDiff + timesDiff;
     }
 
-    public long TinhTien(ArrayList<XeVaoRa> arrayList) {
-        long s = 0;
+    public int TinhTien(ArrayList<XeVaoRa> arrayList) {
+        int s = 0;
         for (XeVaoRa i : arrayList) {
             s += i.getSoTienPhaiTra();
         }
@@ -265,11 +211,10 @@ public class Work {
         if (arr.size() == 0) {
             System.out.println("Không có xe nào ra ngày " + ngayLay);
         } else {
-            long s = 0;
+            int s = 0;
             for (XeVaoRa i : arr)
                 s += i.getSoTienPhaiTra();
             System.out.println("Tổng đã thu " + s + " ngày " + ngayLay);
         }
     }
-
 }

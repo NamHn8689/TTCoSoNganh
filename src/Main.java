@@ -1,11 +1,12 @@
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
         String baiDoXe = "BAIDOXE.DAT";
-        long soTien1H = 5000;
+        int soTien1H = 5000;
         Work f = new Work();
         Scanner scanner = new Scanner(System.in);
         int op;
@@ -16,16 +17,6 @@ public class Main {
             System.out.println("2. Hiển thị tất cả xe trong bãi đỗ xe");
             System.out.println("3. Tạo hóa đơn khi có xe ra");
             System.out.println("4. Làm việc với file THONGKE");
-//            System.out.println("3. Sửa điện thoại trong kho");
-//            System.out.println("5. Hiển thị toàn bộ giỏ hàng");
-//            System.out.println("6. Tạo thông tin khách hàng");
-//            System.out.println("7. Sửa thông tin khách hàng");
-//            System.out.println("8. Hiển thị thông tin khách hàng");
-            //xuất hóa đơn gồm id, các thông tin liên quan đến xe,
-            // ngày giờ lấy xe số tiền phải trả
-            // xóa khỏi thong tin về xe ra trong bãi đỗi xe
-            // đồng thời ghi dữ liệu về xe ra vào file THONGKE.DAT để truy suất(đếm số xe đã
-            //gửi trong ngày hôm nay, số tiền đã thu được trong ngày hôm nay
             System.out.println("0. Thoát");
 
             System.out.print("Lựa chọn của bạn: ");
@@ -62,7 +53,55 @@ public class Main {
                     System.out.println("                                                                                   Xuất thành công\n");
                     break;
                 case 3:
-                    f.CreateAndShowHoaDon(soTien1H);
+                    String time3 = String.valueOf(java.time.LocalTime.now());//lấy h:m:s(UTC)
+                    String ymd3 = String.valueOf(java.time.LocalDate.now());//lấy y-m-d
+
+                    scanner = new Scanner(System.in);
+                    f.XuatTatCaBAIDOXE();
+
+
+                    ArrayList<XeVao> xeVaos = f.DocXeVaoTuFile("BAIDOXE.DAT");
+                    XeVao xeRa = new XeVao();
+
+                    if (xeVaos.size() == 0) {
+                        System.out.println("Không có xe nào trong bãi đỗ");
+
+                    } else {
+                        System.out.print("\nNhập biển số ra: ");
+                        String bienSoRa = scanner.nextLine();
+                        for (int i = 0; i < xeVaos.size(); i++)
+                            if (bienSoRa.equals(xeVaos.get(i).getBienSoXe())) {
+                                xeRa = xeVaos.get(i);
+                                xeVaos.remove(i);//xóa xe này khỏi list
+                                break;
+                            }
+                        if (xeRa.getId() == null)
+                            System.out.println("Không thể tìm thấy xe này");
+                    }
+                    if (xeRa.getId() != null) {
+                        double soHGuiXe = f.timeDiff(xeRa.getNgayGui(), xeRa.getThoiGianGui(), ymd3, time3);
+                        double soTienPhaiTra = soHGuiXe * soTien1H;
+
+                        //hiển thị hóa đơn lên màn hình
+                        System.out.println("--------------------Hóa đơn--------------------");
+                        System.out.println("Mã phiếu: " + xeRa.getId());
+                        System.out.println("Biển số xe: " + xeRa.getBienSoXe());
+                        System.out.println("Nhãn hiệu: " + xeRa.getNhanHieu());
+                        System.out.println("Màu sắc: " + xeRa.getMauSac());
+                        System.out.println("Gửi lúc: " + xeRa.getThoiGianGui() + "(UTC) ngày:" + xeRa.getNgayGui());
+                        System.out.println("Lấy lúc: " + time3 + "(UTC) ngày:" + ymd3);
+                        System.out.println("Số tiền phải trả: " + (int) soTienPhaiTra);
+                        System.out.println("------------------------------------------------------------------------------------");
+                        System.out.println("------------------------------------------------------------------------------------");
+                        XeVaoRa A3 = new XeVaoRa(xeRa.getId(), xeRa.getNhanHieu(), xeRa.getMauSac(), xeRa.getBienSoXe(),
+                                xeRa.getThoiGianGui(), xeRa.getNgayGui(), time3, ymd3, (int) soTienPhaiTra);
+                        f.GhiVaoTHONGKE(A3, "THONGKE.DAT");
+                        if (xeVaos.size() == 0) {
+                            f.DeleteFile("BAIDOXE.DAT");
+                            break;
+                        } else
+                            f.CapNhatFileBAIDOXE(xeVaos, "BAIDOXE.DAT");//GHI LẠI LIST XE VÀO BÃI ĐỖ
+                    }
                     break;
                 case 4:
                     int op4;
@@ -78,7 +117,7 @@ public class Main {
                             //case 7 tong so tien da thu tu ngày x đến nay
                             System.out.print("\nLựa chọn của ban: ");
                             op4 = scanner.nextInt();
-                        } while (op4 < 0 || op4 > 4);
+                        } while (op4 < 0 || op4 > 6);
                         switch (op4) {
                             case 1:
                                 f.XuatTatCaTHONGKE();
@@ -91,7 +130,7 @@ public class Main {
                                 f.XuatDemTHONGKE();
                                 break;
                             case 4:
-                                scanner.nextLine();
+                                scanner = new Scanner(System.in);
                                 String d4, m4, y4;
                                 do {
                                     System.out.println("Vui lòng nhập ngày tháng năm");
@@ -101,14 +140,13 @@ public class Main {
                                     m4 = scanner.nextLine();
                                     System.out.print("Năm(yyyy): ");
                                     y4 = scanner.nextLine();
-                                } while (d4.length() > 2 || d4.length() == 0 || m4.length() > 2
-                                        || m4.length() == 0 || y4.length() > 4 || y4.length() == 0);
+                                } while (d4.length() != 2 || m4.length() != 2 || y4.length() != 4);
                                 String t4 = y4 + '-' + m4 + '-' + d4;
 
                                 f.XuatToanBoXeTheoNgay(t4);
                                 break;
                             case 5:
-                                scanner.nextLine();
+                                scanner = new Scanner(System.in);
                                 String d5, m5, y5;
                                 do {
                                     System.out.println("Vui lòng nhập ngày tháng năm");
@@ -118,13 +156,12 @@ public class Main {
                                     m5 = scanner.nextLine();
                                     System.out.print("Năm(yyyy): ");
                                     y5 = scanner.nextLine();
-                                } while (d5.length() > 2 || d5.length() == 0 || m5.length() > 2
-                                        || m5.length() == 0 || y5.length() > 4 || y5.length() == 0);
+                                } while (d5.length() != 2 || m5.length() != 2 || y5.length() != 4);
                                 String t5 = y5 + '-' + m5 + '-' + d5;
                                 f.XuatSoXeDaVaoRaNgayX(t5);
                                 break;
                             case 6:
-                                scanner.nextLine();
+                                scanner = new Scanner(System.in);
                                 String d6, m6, y6;
                                 do {
                                     System.out.println("Vui lòng nhập ngày tháng năm");
@@ -134,11 +171,9 @@ public class Main {
                                     m6 = scanner.nextLine();
                                     System.out.print("Năm(yyyy): ");
                                     y6 = scanner.nextLine();
-                                } while (d6.length() > 2 || d6.length() == 0 || m6.length() > 2
-                                        || m6.length() == 0 || y6.length() > 4 || y6.length() == 0);
+                                } while (d6.length() != 2 || m6.length() != 2 || y6.length() != 4);
                                 String t6 = y6 + '-' + m6 + '-' + d6;
                                 f.XuatSoTienNgayX(t6);
-                                break;
                         }
                     } while (op4 != 0);
                 default:

@@ -14,24 +14,12 @@ public class Xe {
         return nhanHieu;
     }
 
-    public void setNhanHieu(String nhanHieu) {
-        this.nhanHieu = nhanHieu;
-    }
-
     public String getMauSac() {
         return mauSac;
     }
 
-    public void setMauSac(String mauSac) {
-        this.mauSac = mauSac;
-    }
-
     public String getBienSoXe() {
         return bienSoXe;
-    }
-
-    public void setBienSoXe(String bienSoXe) {
-        this.bienSoXe = bienSoXe;
     }
 
     @Override

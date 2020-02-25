@@ -1,18 +1,18 @@
 public class XeVaoRa extends XeVao {
     private String thoiGianLay;
     private String ngayLay;
-    private long soTienPhaiTra;
+    private int soTienPhaiTra;
 
     public XeVaoRa() {
     }
 
-    public XeVaoRa(String thoiGianLay, String ngayLay, long soTienPhaiTra) {
+    public XeVaoRa(String thoiGianLay, String ngayLay, int soTienPhaiTra) {
         this.thoiGianLay = thoiGianLay;
         this.ngayLay = ngayLay;
         this.soTienPhaiTra = soTienPhaiTra;
     }
 
-    public XeVaoRa(String id, String nhanHieu, String mauSac, String bienSoXe, String thoiGianGui, String ngayGui, String thoiGianLay, String ngayLay, long soTienPhaiTra) {
+    public XeVaoRa(String id, String nhanHieu, String mauSac, String bienSoXe, String thoiGianGui, String ngayGui, String thoiGianLay, String ngayLay, int soTienPhaiTra) {
         super(id, nhanHieu, mauSac, bienSoXe, thoiGianGui, ngayGui);
         this.thoiGianLay = thoiGianLay;
         this.ngayLay = ngayLay;
@@ -23,24 +23,12 @@ public class XeVaoRa extends XeVao {
         return thoiGianLay;
     }
 
-    public void setThoiGianLay(String thoiGianLay) {
-        this.thoiGianLay = thoiGianLay;
-    }
-
     public String getNgayLay() {
         return ngayLay;
     }
 
-    public void setNgayLay(String ngayLay) {
-        this.ngayLay = ngayLay;
-    }
-
-    public long getSoTienPhaiTra() {
+    public int getSoTienPhaiTra() {
         return soTienPhaiTra;
-    }
-
-    public void setSoTienPhaiTra(long soTienPhaiTra) {
-        this.soTienPhaiTra = soTienPhaiTra;
     }
 
     @Override
@@ -52,7 +40,7 @@ public class XeVaoRa extends XeVao {
     }
 
     public String toString2() {
-        return String.format("%s/%s/%s/%s/%s/%s/%s/%s/%l", getId(), getNhanHieu(), getMauSac(), getBienSoXe(), getThoiGianGui(),
-                getNgayGui(), getThoiGianLay(), getNgayLay(), getSoTienPhaiTra());
+        return getId() + '/' + getNhanHieu() + '/' + getMauSac() + '/' + getBienSoXe() + '/' + getThoiGianGui()
+                + '/' + getNgayGui() + '/' + getThoiGianLay() + '/' + getNgayLay() + '/' + getSoTienPhaiTra();
     }
 }

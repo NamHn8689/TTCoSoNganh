@@ -1,55 +1,33 @@
-# BTL_Java_Hit_2019
-Chương trình đơn giản việc bán điện thoại
-
+# TTCoNganh
 Tổ chức chương trình:
-- Lớp DienThoai:
-	+Thuộc tính: mã, tên, nhãn hiệu, giá
-- Lớp DienThoaiTrongKho kế thừa DienThoai:
+- Lớp Xe:
+	+ Thuộc tính: nhãn hiệu, màu săc, biển số xe;
+- Lớp XeVao kế thừa từ lớp Xe:
 	+ Thuộc tính:
-	    Thêm: số lượng trong kho
+	    Thêm: id, thời gian gửi, ngày gửi.
 	+ Phương thức: Constructor, Getter&Setter , toString , toString2
-- Lớp DienThoaiMua kế thừa DienThoai:
+- Lớp XeVaoRa kế thừa XeVao:
 	+ Thuộc tính:
-	    Thêm: số lượng mua, thành tiền
+	    Thêm: thời gian lấy,ngày lấy, số tiền phải trả
 	+ Phương thức: Constructor, Getter&Setter , toString , toString2
-- Lớp KhachHang:
-	+ Thuộc tính: Tên, SĐT , Địa chỉ
-	+ Phương thức: Constructor, Getter&Setter
-
-Cơ sở dữ liệu: KHO.dat
 - Main:
     ----------------Menu-----------------
-    + Thêm điên thoại vào kho
-        + Tạo 1 DienThoaiTrongKho rồi ghi vào file KHO.dat
-    + Hiển thị tất cả điện thoại trong kho
-    + Sửa điện thoại trong kho
-    + Nhặt điên thoại vào giỏ
-        + Tạo 1 DienThoaiMua rồi ghi vào file GIO.dat
-    + Hiển thị toàn bộ giỏ hàng
-    + Tạo thông tin khách hàng
-        + Tạo 1 DienThoaiTrongKho rồi ghi vào file KHO.dat
-    + Sửa thông tin khách hàng
-    + Hiển thị thông tin khách hàng
-    + Tạo rồi xuất hóa đơn hóa đơn
-        + Hiển thị hóa đơn: Ngày, giờ, thông tin khách hàng, giỏ hàng, tổng số tiền phải thanh toán
-        + Tạo ra 1 file với tên [dmyhms].dat
-        + Xóa file GIOHANG.dat và KHACH.DAT ////////// chưa viết
-        + Giảm số lượng của DienThoaiTrongKho ////////chưa viết
-    + Exit
-        + Say good bye
-        + Xóa file KHACH.DAT VÀ GIO.dat //chưa được
-
+    + Thêm xe vào BAIDOXE
+        + Tạo 1 Xe rồi ghi vào file BAIDOXE.DAT
+    + Hiển thị tất cả Xe trong BAIDOXE
+    + Hiển thị hóa đơn:Thông tin về xe ra
+        + Biển số, màu sắc, nhãn hiệu
+        + Ngày giờ gửi xe
+        + Ngày giờ lấy xe 
+        + Số tiền phải thanh toán(được tính theo số giờ đã gửi)
+    + Làm việc với file THONGKE
+        + Hiển thị tất cả file THONGKE.DAT
+        + Hiển thị tổng số tiền đã thu từ trước đế nay
+        + Hiển thị số xe đã gửi và thanh toán xong từ trước đế nay
+        + Hiển thị tất cả thông tin về xe ra vào trong ngày yyyy-MM-dd
+        + Hiển thị số xe đã gửi và thanh toán trong ngày yyyy-MM-dd
+        + Tổng số tiền đã thu trong ngày yyyy-mm-dd
+        + Trở lại 
+    + Thoát
 - Hạn chế:
-    + Chưa sửa được Giỏ hàng mà mình đã chọn
-    + Chỉ có thể thêm điện thoại vào giỏ bằng Id
-        + Sẽ update ở các version sau !
-    + Chưa có method hay function nào kiểm soát(đọc lại, đếm, ...) số hóa đơn đã tạo ra
-    + Các function, các method viết chưa được trừu tượng hóa
-- Tài liệu tham khảo:
-    + Github: Bùi Tất Trung(tattrung15)
-    + Youtube: 2 bài đọc ghi file trên kênh của Thân Triệu
-    + Bên cạnh có còn có tài liệu tràn lan trên Google, Stack Overflow, ...
-
-- Nhóm thực hiện:
-    + PNam(NamKeKe)
-    + PNam(tieulac305)
+    + Còn nhiều Exception chưa fix

@@ -18,24 +18,12 @@ public class XeVao extends Xe {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getThoiGianGui() {
         return thoiGianGui;
     }
 
-    public void setThoiGianGui(String thoiGianGui) {
-        this.thoiGianGui = thoiGianGui;
-    }
-
     public String getNgayGui() {
         return ngayGui;
-    }
-
-    public void setNgayGui(String ngayGui) {
-        this.ngayGui = ngayGui;
     }
 
     @Override
