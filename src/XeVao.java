@@ -41,7 +41,7 @@ public class XeVao extends Xe {
     @Override
     public String toString() {
         return "XeVao{" +
-                "id='" + id + '\'' +
+                "id='" + id + '\'' + ", nhanHieu='" + getNhanHieu() + '\'' + ", mauSac='" + getMauSac() + '\'' + ", bienSoXE='" + getBienSoXe() + '\'' +
                 ", thoiGianGui='" + thoiGianGui + '\'' +
                 ", ngayGui='" + ngayGui + '\'' +
                 '}';

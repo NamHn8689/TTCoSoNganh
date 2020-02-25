@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.addressing.WsaActionUtil;
+
 import java.io.*;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -73,13 +75,13 @@ public class Work {
 
     //========================================================================================
     //Create
-    public XeVao CreateXeVaoTuFile(String data) {
+    public XeVao TaoXeVaoTuFile(String data) {
         String[] s = data.split("/");
         XeVao A = new XeVao(s[0], s[1], s[2], s[3], s[4], s[5]);
         return A;
     }
 
-    public XeVaoRa CreateXeVaoRaTuFile(String data) {
+    public XeVaoRa TaoXeVaoRaTuFile(String data) {
         String[] s = data.split("/");
         XeVaoRa A = new XeVaoRa(s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], Long.parseLong(s[8]));
         return A;
@@ -91,10 +93,9 @@ public class Work {
         String ymd = String.valueOf(java.time.LocalDate.now());//lấy y-m-d
 
         ArrayList<XeVao> xeVaos = DocXeVaoTuFile("BAIDOXE.DAT");
-
         String bienSoRa;
-
         XeVao xeRa = new XeVao();
+
         do {
             XuatTatCaBAIDOXE();
             System.out.println("\nNhập biển số xe của xe muốn thanh toán");
@@ -136,7 +137,7 @@ public class Work {
         ArrayList<XeVao> list = new ArrayList<XeVao>();
         while (scanner.hasNext()) {
             String data = scanner.nextLine();
-            XeVao A = CreateXeVaoTuFile(data);
+            XeVao A = TaoXeVaoTuFile(data);
             list.add(A);
         }
         CloseFileAfterRead();
@@ -148,7 +149,7 @@ public class Work {
         ArrayList<XeVaoRa> list = new ArrayList<XeVaoRa>();
         while (scanner.hasNext()) {
             String data = scanner.nextLine();
-            XeVaoRa A = CreateXeVaoRaTuFile(data);
+            XeVaoRa A = TaoXeVaoRaTuFile(data);
             list.add(A);
         }
         CloseFileAfterRead();
@@ -165,8 +166,12 @@ public class Work {
 
     public void XuatTatCaTHONGKE() {
         ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
-        for (XeVaoRa i : arr)
-            System.out.println(i.toString());
+        if (arr.size() == 0) {
+            System.out.println("\nFile THONGKE.DAT rỗng");
+        } else {
+            for (XeVaoRa i : arr)
+                System.out.println(i.toString());
+        }
     }
 
 
@@ -214,12 +219,57 @@ public class Work {
 
     public void XuatToanBoTienTuTHONGKE() {
         ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
-        System.out.println("Toàn bộ tiền: " + TinhTien(arr));
+        if (arr.size() == 0) {
+            System.out.println("\nFile THONGKE.DAT rỗng\n");
+        } else {
+            System.out.println("Toàn bộ tiền: " + TinhTien(arr));
+        }
     }
 
     public void XuatDemTHONGKE() {
         ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
         System.out.println("Có tất cả " + arr.size() + " xe trong file THONGKE");
+    }
+
+    public ArrayList<XeVaoRa> LayListBangNgayLay(String ngayLay) {
+        ArrayList<XeVaoRa> arr = DocXeVaoRaTuFile("THONGKE.DAT");
+        ArrayList<XeVaoRa> resultList = new ArrayList<>();
+        for (XeVaoRa i : arr)
+            if (ngayLay.equals(i.getNgayLay()))
+                resultList.add(i);
+        return resultList;
+    }
+
+    public void XuatToanBoXeTheoNgay(String ngayLay) {
+        ArrayList<XeVaoRa> arr = LayListBangNgayLay(ngayLay);
+        if (arr.size() == 0) {
+            System.out.println("Không có xe nào ra ngày " + ngayLay);
+        } else {
+            System.out.println("Thông tin về các xe đã ra " + ngayLay);
+            for (XeVaoRa i : arr)
+                System.out.println(i.toString());
+        }
+    }
+
+    public void XuatSoXeDaVaoRaNgayX(String ngayLay) {
+        ArrayList<XeVaoRa> arr = LayListBangNgayLay(ngayLay);
+        if (arr.size() == 0) {
+            System.out.println("Không có xe nào ra ngày " + ngayLay);
+        } else {
+            System.out.println("Có " + arr.size() + " xe đã ra ngày " + ngayLay);
+        }
+    }
+
+    public void XuatSoTienNgayX(String ngayLay) {
+        ArrayList<XeVaoRa> arr = LayListBangNgayLay(ngayLay);
+        if (arr.size() == 0) {
+            System.out.println("Không có xe nào ra ngày " + ngayLay);
+        } else {
+            long s = 0;
+            for (XeVaoRa i : arr)
+                s += i.getSoTienPhaiTra();
+            System.out.println("Tổng đã thu " + s + " ngày " + ngayLay);
+        }
     }
 
 }
