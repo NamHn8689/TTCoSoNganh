@@ -20,6 +20,8 @@ Tổ chức chương trình:
         + Ngày giờ gửi xe
         + Ngày giờ lấy xe 
         + Số tiền phải thanh toán(được tính theo số giờ đã gửi)
+        + Xóa thông tin về xe đó ra khỏi BAIDOXE.DAT
+        + Ghi lại thông tin vào file THONGKE.DAT
     + Làm việc với file THONGKE
         + Hiển thị tất cả file THONGKE.DAT
         + Hiển thị tổng số tiền đã thu từ trước đế nay
