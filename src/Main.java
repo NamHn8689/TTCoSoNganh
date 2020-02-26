@@ -46,6 +46,7 @@ public class Main {
                     XeVao A = new XeVao(id, nhanHieu, mauSac, bienSoXe, time, ymd);
                     //ghi xe A vào file BAIDOXE.DAT
                     f.GhiVaoBAIDOXE(A, baiDoXe);
+                    System.out.println("Xe có id: " + A.getId() + "đã được ghi thành công");
                     break;
                 case 2:
                     System.out.println("\nBãi đỗ xe:\n");
